@@ -28,12 +28,7 @@ const CardDetail = ({
       </div>
       <div className="content-description">
         <h2 className="description-title">Descripción del producto</h2>
-        <span className="description-text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus
-          excepturi, obcaecati quos molestiae debitis voluptates? Ea, tenetur
-          nisi rem obcaecati esse ratione nulla doloremque repudiandae officia
-          facere incidunt ex tempore?
-        </span>
+        <span className="description-text">{description}</span>
       </div>
     </div>
   );

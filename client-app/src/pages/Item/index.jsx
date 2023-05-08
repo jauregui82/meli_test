@@ -1,4 +1,5 @@
 import Header from "src/components/Header";
+import Breadcrumb from "src/components/Breadcrumb";
 import CardDetail from "src/components/CardDetail";
 
 const Item = () => {
@@ -6,6 +7,7 @@ const Item = () => {
     <>
       <Header />
       <main>
+        <Breadcrumb />
         <CardDetail
           imsSrc="https://http2.mlstatic.com/D_606405-MLA46400306153_062021-I.jpg"
           price="1.980"

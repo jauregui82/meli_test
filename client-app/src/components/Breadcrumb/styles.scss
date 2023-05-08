@@ -1,0 +1,39 @@
+.content-breadcrumb {
+  .breadcrumb {
+    &-ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    &-li {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      .first-link {
+        margin-right: 12px;
+        .separator {
+          margin-left: 12px;
+          color: #666;
+          &:hover {
+            color: #666;
+          }
+        }
+      }
+    }
+    &-link {
+      text-decoration: none;
+      color: #666;
+      font-size: 14px;
+      display: flex;
+      &:hover {
+        color: #2968c8;
+      }
+      .chevron {
+        margin: 0 6px;
+        color: #666;
+        &:hover {
+          color: #666;
+        }
+      }
+    }
+  }
+}
