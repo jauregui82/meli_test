@@ -6,20 +6,21 @@ header {
 
 .content {
   &-header {
+    max-width: 1200px;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 8px 10px 12px 10px;
+    margin: auto;
   }
   &-search {
-    max-width: 1000px;
     width: 100%;
     &-input {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100%;
+      width: calc(100% - 30px);
       margin: 0 30px;
       position: relative;
 
