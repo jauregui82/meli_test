@@ -1,16 +1,23 @@
+import { useParams } from "react-router-dom";
 import Layout from "src/components/Layout";
 import CardDetail from "src/components/CardDetail";
+import { useFetch } from "src/hooks/useFetch";
 
 const Item = () => {
+  let { id } = useParams();
+  const { data } = useFetch(`items/${id}`);
   return (
     <Layout>
-      <CardDetail
-        imsSrc="https://http2.mlstatic.com/D_606405-MLA46400306153_062021-I.jpg"
-        price="1.980"
-        title="Apple iPhone 11 (128 Gb) - Negro"
-        category="categoria"
-        newProduct={true}
-      />
+      {data?.message?.item && (
+        <CardDetail
+          imsSrc={data?.message?.item?.picture}
+          price={data?.message?.item?.price.amount}
+          title={data?.message?.item?.title}
+          quantity={data?.message?.item?.sold_quantity}
+          newProduct={data?.message?.item?.condition}
+          description={data?.message?.item?.description}
+        />
+      )}
     </Layout>
   );
 };

@@ -12,13 +12,13 @@ const Items = () => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Layout valueSearch={search} categories={data?.message.categories}>
+      <Layout valueSearch={search} categories={data?.message?.categories}>
         {data?.message?.items.map((item) => (
           <CardList
             key={item.id}
             id={item.id}
             imsSrc={item?.picture}
-            price={item?.price.amount}
+            price={item?.price?.amount}
             title={item?.title}
             address={item?.address}
             freeShipping={item?.free_shipping}

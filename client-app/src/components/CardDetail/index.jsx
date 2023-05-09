@@ -4,7 +4,7 @@ const CardDetail = ({
   imsSrc,
   price,
   title,
-  category,
+  quantity,
   description,
   newProduct,
 }) => {
@@ -15,9 +15,11 @@ const CardDetail = ({
           <img src={imsSrc} alt={title} />
         </div>
         <div className="content-product-price">
-          <span className="product-type">{`${
-            newProduct ? "Nuevo" : "Usado"
-          }  |  ${category}`}</span>
+          <span className="product-type">
+            {`${
+              newProduct === "new" ? "Nuevo" : "Usado"
+            } - ${quantity} vendidos`}{" "}
+          </span>
           <span className="product-title">{title}</span>
           <div className="content-price">
             <span className="product-price">$ {price}</span>
@@ -36,10 +38,10 @@ const CardDetail = ({
 
 CardDetail.propTypes = {
   imsSrc: PropTypes.string,
-  price: PropTypes.string,
+  price: PropTypes.number,
   title: PropTypes.string,
-  category: PropTypes.string,
+  quantity: PropTypes.string,
   description: PropTypes.string,
-  newProduct: PropTypes.bool,
+  newProduct: PropTypes.string,
 };
 export default CardDetail;
