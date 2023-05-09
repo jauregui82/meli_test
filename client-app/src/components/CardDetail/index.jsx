@@ -18,9 +18,9 @@ const CardDetail = ({
         </div>
         <div className="content-product-price">
           <span className="product-type">
-            {`${
-              newProduct === "new" ? "Nuevo" : "Usado"
-            } - ${quantity} vendidos`}{" "}
+            {`${newProduct === "new" ? "Nuevo" : "Usado"}${
+              quantity ? ` - ${quantity} vendidos` : ""
+            } `}{" "}
           </span>
           <span className="product-title">{title}</span>
           <div className="content-price">

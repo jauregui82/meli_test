@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+
 import "./styles.scss";
 
 const Header = () => {
@@ -25,7 +26,9 @@ const Header = () => {
     <header>
       <div className="content-header">
         <div className="content-logo">
-          <img src="/Logo_ML.png" />
+          <Link className="price" to={`/`}>
+            <img src="/Logo_ML.png" />
+          </Link>
         </div>
         <form className="content-search" onSubmit={searchData}>
           <div className="content-search-input">
