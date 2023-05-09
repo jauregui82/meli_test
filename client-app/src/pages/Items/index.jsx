@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Suspense } from "react";
 import Layout from "src/components/Layout";
@@ -10,7 +9,6 @@ const Items = () => {
   const params = new URLSearchParams(location);
   const search = params.get("search").split("=")[1];
   const { data } = useFetch(`items?q=${search}`);
-  console.log({ data, search });
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
