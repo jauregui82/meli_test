@@ -40,6 +40,6 @@ CardDetail.propTypes = {
   title: PropTypes.string,
   category: PropTypes.string,
   description: PropTypes.string,
-  newProduct: PropTypes.boolean,
+  newProduct: PropTypes.bool,
 };
 export default CardDetail;

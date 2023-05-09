@@ -4,7 +4,7 @@ const Header = () => {
     <header>
       <div className="content-header">
         <div className="content-logo">
-          <img src="src/assets/Logo_ML.png" />
+          <img src="/Logo_ML.png" />
         </div>
         <form className="content-search">
           <div className="content-search-input">
@@ -13,7 +13,7 @@ const Header = () => {
               placeholder="Nunca dejes de buscar"
             />
             <button className="icon" type="submit">
-              z
+              <img src="/ic_Search.png" alt="search icon" />
             </button>
           </div>
         </form>
