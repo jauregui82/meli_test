@@ -1,29 +1,26 @@
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import "./styles.scss";
-const Breadcrumb = () => {
+const Breadcrumb = ({ categories }) => {
   return (
     <section className="content-breadcrumb">
       <ul className="breadcrumb-ul">
-        <li className="breadcrumb-li">
-          <Link className="breadcrumb-link first-link" to={"/items"}>
-            <span className="text">Volver al listado</span>
-            <span className="separator">|</span>
-          </Link>
-          <Link className="breadcrumb-link" to={"/items"}>
-            Computacion
-            <span className="chevron">{">"}</span>
-          </Link>
-          <Link className="breadcrumb-link" to={"/items"}>
-            {"Lorem"}
-            <span className="chevron">{">"}</span>
-          </Link>
-          <Link className="breadcrumb-link" to={"/items"}>
-            {"Lorem"}
-          </Link>
-        </li>
+        {categories?.map((item, index) => (
+          <li className="breadcrumb-li" key={index}>
+            <Link className="breadcrumb-link" to={"#"}>
+              <span className="text">{item.name}</span>
+              {console.log({ item })}
+              {categories.length - 1 !== index && (
+                <span className="chevron">{">"}</span>
+              )}
+            </Link>
+          </li>
+        ))}
       </ul>
     </section>
   );
 };
-
+Breadcrumb.propTypes = {
+  categories: PropTypes.array,
+};
 export default Breadcrumb;

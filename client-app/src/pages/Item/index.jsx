@@ -7,7 +7,7 @@ const Item = () => {
   let { id } = useParams();
   const { data } = useFetch(`items/${id}`);
   return (
-    <Layout>
+    <Layout categories={data?.message?.categories}>
       {data?.message?.item && (
         <CardDetail
           imsSrc={data?.message?.item?.picture}

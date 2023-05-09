@@ -16,7 +16,19 @@ const meliApi = axios.create({
   },
   paramsSerializer: (params) => qs.stringify(params, { encode: false }),
 });
-const getCategories = async (dataResult) => {
+
+const getCategories = async (categoryId) => {
+  try {
+    const { data } = await meliApi.get(`/categories/${categoryId}`);
+    const { path_from_root } = data;
+    return path_from_root;
+  } catch (error) {
+    res.status(200).json({ message: error.data });
+    return [];
+  }
+};
+
+const handlerCategories = async (dataResult) => {
   let groupCategory = dataResult.reduce(
     (acc, { category_id }) => ({
       ...acc,
@@ -29,14 +41,7 @@ const getCategories = async (dataResult) => {
     ([category, ocurrences]) => ocurrences === maxOcurrences
   )[0];
 
-  try {
-    const { data } = await meliApi.get(`/categories/${maxCategory}`);
-    const { path_from_root } = data;
-    return path_from_root.find((cat) => cat.id == maxCategory);
-  } catch (error) {
-    res.status(200).json({ message: error.data });
-    return [];
-  }
+  return getCategories(maxCategory);
 };
 
 router.get("/", async (req, res) => {
@@ -48,7 +53,7 @@ router.get("/", async (req, res) => {
     const { available_filters, results } = data;
     const customItems = {
       author: personalInfo,
-      categories: await getCategories(results),
+      categories: await handlerCategories(results),
       items: results.map((item) => {
         return {
           id: item.id,
@@ -72,45 +77,57 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  const urlSingleItem = meliApi.get(`/items/${id}`);
-  const urlDescription = meliApi.get(`/items/${id}/description`);
-
-  axios
-    .all([urlSingleItem, urlDescription])
-    .then(
-      axios.spread((...responses) => {
-        const { data } = responses[0];
-        const { plain_text } = responses[1].data;
-
-        const customItem = Object.assign({
+    const [singleItemResponse, descriptionResponse] = await Promise.all([
+      meliApi.get(`/items/${id}`, {
+        params: {
           author: personalInfo,
-          item: {
-            id: data.id,
-            title: data.title,
-            price: {
-              currency: data.currency_id,
-              amount: data.price,
-              decimals: 2,
-            },
-            picture: data.thumbnail,
-            condition: data.condition,
-            free_shipping: data.shipping?.free_shipping,
-            sold_quantity: data.variations.find((s) =>
-              s.hasOwnProperty("sold_quantity")
-            )?.sold_quantity,
-            description: plain_text,
-          },
-        });
+        },
+      }),
+      meliApi.get(`/items/${id}/description`, {
+        params: {
+          author: personalInfo,
+        },
+      }),
+    ]);
 
-        res.status(200).json({ message: customItem });
-      })
-    )
-    .catch((errors) => {
-      console.error(errors);
-      res.status(500).json({ message: errors.data });
-    });
+    const { data: singleItemData } = singleItemResponse;
+    const { plain_text } = descriptionResponse.data;
+
+    const categories = await getCategories(singleItemData.category_id);
+
+    const customItem = {
+      author: personalInfo,
+      categories: categories ?? null,
+      item: {
+        id: singleItemData.id,
+        title: singleItemData.title,
+        price: {
+          currency: singleItemData.currency_id,
+          amount: singleItemData.price,
+          decimals: 2,
+        },
+        picture: singleItemData.thumbnail,
+        condition: singleItemData.condition,
+        free_shipping: singleItemData.shipping?.free_shipping,
+        sold_quantity: singleItemData.variations.find((s) =>
+          s.hasOwnProperty("sold_quantity")
+        )?.sold_quantity,
+        description: plain_text,
+      },
+    };
+
+    res.status(200).json({ message: customItem });
+  } catch (error) {
+    console.error(error);
+    if (error.response && error.response.data) {
+      res.status(500).json({ message: error.response.data });
+    } else {
+      res.status(500).json({ message: error.message });
+    }
+  }
 });
 
 module.exports = router;
