@@ -12,7 +12,15 @@ const Items = () => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Layout categories={data?.message?.categories}>
+      <Layout
+        categories={data?.message?.categories}
+        title={`${search} | MercadoLibre`}
+        image={data?.message?.items[0]?.picture}
+        type={data?.message?.categories[0]?.name}
+        description={
+          "Envíos Gratis en el día ✓ Compre Iphone en cuotas sin interés! Conozca nuestras increíbles ofertas y promociones en millones de productos."
+        }
+      >
         {data?.message?.items.map((item) => (
           <CardList
             key={item.id}
