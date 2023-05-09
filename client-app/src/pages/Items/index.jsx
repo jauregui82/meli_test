@@ -1,34 +1,33 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Suspense } from "react";
 import Layout from "src/components/Layout";
 import CardList from "src/components/CardList";
+import { useFetch } from "src/hooks/useFetch";
 
 const Items = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location);
+  const search = params.get("search").split("=")[1];
+  const { data } = useFetch(`items?q=${search}`);
+  console.log({ data, search });
+
   return (
-    <Layout>
-      <CardList
-        imsSrc="https://http2.mlstatic.com/D_606405-MLA46400306153_062021-I.jpg"
-        price="$ 1.980"
-        title="Apple iPhone 11 (128 Gb) - Negro"
-        category="categoria"
-      />
-      <CardList
-        imsSrc="https://http2.mlstatic.com/D_606405-MLA46400306153_062021-I.jpg"
-        price="$ 1.980"
-        title="Apple iPhone 11 (128 Gb) - Negro"
-        category="categoria"
-      />
-      <CardList
-        imsSrc="https://http2.mlstatic.com/D_606405-MLA46400306153_062021-I.jpg"
-        price="$ 1.980"
-        title="Apple iPhone 11 (128 Gb) - Negro"
-        category="categoria"
-      />
-      <CardList
-        imsSrc="https://http2.mlstatic.com/D_606405-MLA46400306153_062021-I.jpg"
-        price="$ 1.980"
-        title="Apple iPhone 11 (128 Gb) - Negro"
-        category="categoria"
-      />
-    </Layout>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Layout valueSearch={search} categories={data?.message.categories}>
+        {data?.message?.items.map((item) => (
+          <CardList
+            key={item.id}
+            id={item.id}
+            imsSrc={item?.picture}
+            price={item?.price.amount}
+            title={item?.title}
+            address={item?.address}
+            freeShipping={item?.free_shipping}
+          />
+        ))}
+      </Layout>
+    </Suspense>
   );
 };
 
