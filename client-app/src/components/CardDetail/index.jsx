@@ -40,7 +40,7 @@ CardDetail.propTypes = {
   imsSrc: PropTypes.string,
   price: PropTypes.number,
   title: PropTypes.string,
-  quantity: PropTypes.string,
+  quantity: PropTypes.number,
   description: PropTypes.string,
   newProduct: PropTypes.string,
 };
