@@ -9,7 +9,6 @@ const Breadcrumb = ({ categories }) => {
           <li className="breadcrumb-li" key={index}>
             <Link className="breadcrumb-link" to={"#"}>
               <span className="text">{item.name}</span>
-              {console.log({ item })}
               {categories.length - 1 !== index && (
                 <span className="chevron">{">"}</span>
               )}

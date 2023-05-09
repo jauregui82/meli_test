@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
+import { formatNumber } from "src/utils/formatNumber";
 import "./styles.scss";
+
 const CardDetail = ({
   imsSrc,
   price,
@@ -22,7 +24,7 @@ const CardDetail = ({
           </span>
           <span className="product-title">{title}</span>
           <div className="content-price">
-            <span className="product-price">$ {price}</span>
+            <span className="product-price">{formatNumber(price)}</span>
             <span className="product-price-decimals">00</span>
           </div>
           <button className="product-btn-buy">Comprar</button>

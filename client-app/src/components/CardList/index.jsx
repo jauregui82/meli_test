@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { formatNumber } from "src/utils/formatNumber";
 import "./styles.scss";
 const CardList = ({ imsSrc, price, title, address, id, freeShipping }) => {
   return (
@@ -13,7 +14,7 @@ const CardList = ({ imsSrc, price, title, address, id, freeShipping }) => {
         <div className="content-description">
           <Link className="price" to={`/items/${id}`}>
             <span className={`price ${freeShipping && "free-shipping"}`}>
-              $ {price}
+              {formatNumber(price)}
             </span>
           </Link>
           <Link className="title" to={`/items/${id}`}>
